@@ -1,8 +1,11 @@
 package com.company.controller;
 
 import com.company.dto.Task;
+import com.company.enums.TaskStatus;
+import com.company.repository.TaskRepository;
 import com.company.service.TaskService;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class TaskController {
@@ -20,10 +23,16 @@ public class TaskController {
                     printTaskList();
                     break;
                 case 3:
+                    printTaskListfinnish();
+                    break;
+                    case 4:
                     deleteTask();
                     break;
-                case 4:
+                case 5:
                     updateTask();
+                    break;
+                case 6:
+                    done();
                     break;
                 case 0:
                     t = false;
@@ -54,6 +63,17 @@ public class TaskController {
         TaskService taskService = new TaskService();
         taskService.addTask(task);
 
+    }
+    public void done(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Id");
+        Integer id = Integer.valueOf(scanner.next());
+
+        Task task = new Task();
+        task.setStatus(TaskStatus.DONE);
+        task.setFinishedDate(LocalDateTime.now());
+        TaskService taskService = new TaskService();
+        taskService.TaskDone(task,id);
     }
 
     public void updateTask() {
@@ -90,6 +110,11 @@ public class TaskController {
         taskService.showTaskList();
     }
 
+    public void printTaskListfinnish() {
+        TaskService taskService = new TaskService();
+        taskService.showTaskListFinnish();
+    }
+
     public int getAction() {
         Scanner scanner = new Scanner(System.in);
         int action = scanner.nextInt();
@@ -99,9 +124,11 @@ public class TaskController {
     public void showMenu() {
         System.out.println("** Menu \uD83D\uDE01 **");
         System.out.println("1. Add Task");
-        System.out.println("2. Task List");
-        System.out.println("3. Delete Task");
-        System.out.println("4. Update Task");
+        System.out.println("2. Active Task List");
+        System.out.println("3. Finished Task List");
+        System.out.println("4. Delete Task");
+        System.out.println("5. Update Task");
+        System.out.println("6. done Task");
         System.out.println("0. Exit");
     }
 

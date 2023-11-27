@@ -50,7 +50,20 @@ public class TaskService {
         TaskRepository taskRepository = new TaskRepository();
         List<Task> taskList = taskRepository.getAllTask();
         for (Task task : taskList){
-            System.out.println(task);
+            if (task.getStatus().equals(TaskStatus.ACTIVE)){
+                System.out.println(task);
+            }
+        }
+//        taskList.forEach(task -> System.out.println(task));
+    }
+
+    public void showTaskListFinnish() {
+        TaskRepository taskRepository = new TaskRepository();
+        List<Task> taskList = taskRepository.getAllTaskFinish();
+        for (Task task : taskList){
+            if (task.getStatus().equals(TaskStatus.DONE)) {
+                System.out.println(task);
+            }
         }
 //        taskList.forEach(task -> System.out.println(task));
     }
@@ -64,5 +77,9 @@ public class TaskService {
     public void updateTask(Task task,int id) {
         TaskRepository taskRepository = new TaskRepository();
         taskRepository.updateTask(task,id);
+    }
+    public void TaskDone(Task task,int id) {
+        TaskRepository taskRepository = new TaskRepository();
+        taskRepository.doneTask(task,id);
     }
 }

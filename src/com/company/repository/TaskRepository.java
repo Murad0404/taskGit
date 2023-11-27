@@ -23,6 +23,21 @@ public class TaskRepository {
         }
         return false;
     }
+    public List<Task> doneTask(Task task, int id) {
+        List<Task> dtoList = new LinkedList<>();
+        try {
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
+            Statement statement = con.createStatement();
+            String rs = "update task set status= '%s',finished_date = '%s' WHERE id = "+id;
+            rs = String.format(rs, task.getStatus(), task.getFinishedDate());
+            int effectedRows = statement.executeUpdate(rs);
+            dtoList.add(task);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dtoList;
+    }
 
     public List<Task> updateTask(Task task, int id) {
         List<Task> dtoList = new LinkedList<>();
@@ -63,6 +78,39 @@ public class TaskRepository {
                 LocalDateTime localDateTime2 = timestamp2.toLocalDateTime();
                 task.setFinishedDate(localDateTime2);*/
                // task.setFinishedDate(LocalDateTime.parse(rs.getString("finished_date")));
+                dtoList.add(task);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dtoList;
+    }
+
+    public List<Task>getAllTaskFinish() {
+        List<Task> dtoList = new LinkedList<>();
+        try {
+            Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("select id,title,content,status,created_date,finished_date from task");
+
+            while (rs.next()) {
+                Task task = new Task();
+                task.setId(rs.getInt("id"));
+                task.setTitle(rs.getString("title"));
+                task.setContent(rs.getString("content"));
+                task.setStatus(TaskStatus.valueOf(rs.getString("status")));
+                // task.setCreatedDate(LocalDateTime.parse(rs.getString("created_date")));
+                java.sql.Timestamp timestamp = rs.getTimestamp("created_date");
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                task.setCreatedDate(localDateTime);
+
+                if (task.getStatus().equals(TaskStatus.DONE)){
+                java.sql.Timestamp timestamp2 = rs.getTimestamp("finished_date");
+                LocalDateTime localDateTime2 = timestamp2.toLocalDateTime();
+                task.setFinishedDate(localDateTime2);}
+
+                // task.setFinishedDate(LocalDateTime.parse(rs.getString("finished_date")));
                 dtoList.add(task);
             }
             con.close();

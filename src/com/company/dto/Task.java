@@ -83,11 +83,12 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", status=" + status +
                 ", createdDate=" + createdDate +
+                ", finishedDate=" + finishedDate +
                 '}';
     }
 }

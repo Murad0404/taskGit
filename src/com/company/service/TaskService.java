@@ -9,33 +9,34 @@ import java.util.List;
 
 public class TaskService {
 
-    /** __Task Manager  Console Program__
-
-     Task
-     (id(serial),title,content(text),status(varchar),created_date(timestamp),finished_date(timestamp))
-
-     status - TaskStatus - Enum
-     ACTIVE,DONE
-
-     ***** Menu *****
-     1-Create
-     Enter title:
-     Enter content:
-     2-Active Task List
-     3-Finished Task List
-     4-Update (by id)
-     Enter Task Id:
-     Enter Title:
-     Enter Content:
-     5-Delete by id:
-     Enter Delete Task Id:
-     6-Mark as Done:
-     Enter Task Id To Mark it as Done:
+    /**
+     * __Task Manager  Console Program__
+     * <p>
+     * Task
+     * (id(serial),title,content(text),status(varchar),created_date(timestamp),finished_date(timestamp))
+     * <p>
+     * status - TaskStatus - Enum
+     * ACTIVE,DONE
+     * <p>
+     * **** Menu *****
+     * 1-Create
+     * Enter title:
+     * Enter content:
+     * 2-Active Task List
+     * 3-Finished Task List
+     * 4-Update (by id)
+     * Enter Task Id:
+     * Enter Title:
+     * Enter Content:
+     * 5-Delete by id:
+     * Enter Delete Task Id:
+     * 6-Mark as Done:
+     * Enter Task Id To Mark it as Done:
      */
 
-    public void addTask(Task task){
+    public void addTask(Task task) {
 
-        if (task.getTitle().length()<3){
+        if (task.getTitle().length() < 3) {
             System.err.println("TASK QO'SHILDI ");
             return;
         }
@@ -49,8 +50,8 @@ public class TaskService {
     public void showTaskList() {
         TaskRepository taskRepository = new TaskRepository();
         List<Task> taskList = taskRepository.getAllTask();
-        for (Task task : taskList){
-            if (task.getStatus().equals(TaskStatus.ACTIVE)){
+        for (Task task : taskList) {
+            if (task.getStatus().equals(TaskStatus.ACTIVE)) {
                 System.out.println(task);
             }
         }
@@ -60,7 +61,7 @@ public class TaskService {
     public void showTaskListFinnish() {
         TaskRepository taskRepository = new TaskRepository();
         List<Task> taskList = taskRepository.getAllTaskFinish();
-        for (Task task : taskList){
+        for (Task task : taskList) {
             if (task.getStatus().equals(TaskStatus.DONE)) {
                 System.out.println(task);
             }
@@ -74,12 +75,13 @@ public class TaskService {
 
     }
 
-    public void updateTask(Task task,int id) {
+    public void updateTask(Task task, int id) {
         TaskRepository taskRepository = new TaskRepository();
-        taskRepository.updateTask(task,id);
+        taskRepository.updateTask(task, id);
     }
-    public void TaskDone(Task task,int id) {
+
+    public void TaskDone(Task task, int id) {
         TaskRepository taskRepository = new TaskRepository();
-        taskRepository.doneTask(task,id);
+        taskRepository.doneTask(task, id);
     }
 }

@@ -16,13 +16,13 @@ public class Task {
 
     private LocalDateTime finishedDate;
 
-    public Task(Integer id, String title, String content, TaskStatus status, LocalDateTime createdDate,LocalDateTime finishedDate) {
+    public Task(Integer id, String title, String content, TaskStatus status, LocalDateTime createdDate, LocalDateTime finishedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.status = status;
         this.createdDate = createdDate;
-        this.finishedDate =finishedDate;
+        this.finishedDate = finishedDate;
     }
 
     public Task() {

@@ -14,7 +14,7 @@ public class TaskRepository {
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
             Statement statement = con.createStatement();
-            String rs = "DELETE FROM task WHERE id = "+id;
+            String rs = "DELETE FROM task WHERE id = " + id;
             int effectedRows = statement.executeUpdate(rs);
             con.close();
             return effectedRows != 0;
@@ -23,12 +23,13 @@ public class TaskRepository {
         }
         return false;
     }
+
     public List<Task> doneTask(Task task, int id) {
         List<Task> dtoList = new LinkedList<>();
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
             Statement statement = con.createStatement();
-            String rs = "update task set status= '%s',finished_date = '%s' WHERE id = "+id;
+            String rs = "update task set status= '%s',finished_date = '%s' WHERE id = " + id;
             rs = String.format(rs, task.getStatus(), task.getFinishedDate());
             int effectedRows = statement.executeUpdate(rs);
             dtoList.add(task);
@@ -44,10 +45,10 @@ public class TaskRepository {
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
             Statement statement = con.createStatement();
-            String rs = "update task set title= '%s',content = '%s' WHERE id = "+id;
+            String rs = "update task set title= '%s',content = '%s' WHERE id = " + id;
             rs = String.format(rs, task.getTitle(), task.getContent());
             int effectedRows = statement.executeUpdate(rs);
-                dtoList.add(task);
+            dtoList.add(task);
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,7 +78,7 @@ public class TaskRepository {
                /* java.sql.Timestamp timestamp2 = rs.getTimestamp("finished_date");
                 LocalDateTime localDateTime2 = timestamp2.toLocalDateTime();
                 task.setFinishedDate(localDateTime2);*/
-               // task.setFinishedDate(LocalDateTime.parse(rs.getString("finished_date")));
+                // task.setFinishedDate(LocalDateTime.parse(rs.getString("finished_date")));
                 dtoList.add(task);
             }
             con.close();
@@ -87,7 +88,7 @@ public class TaskRepository {
         return dtoList;
     }
 
-    public List<Task>getAllTaskFinish() {
+    public List<Task> getAllTaskFinish() {
         List<Task> dtoList = new LinkedList<>();
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
@@ -105,10 +106,11 @@ public class TaskRepository {
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
                 task.setCreatedDate(localDateTime);
 
-                if (task.getStatus().equals(TaskStatus.DONE)){
-                java.sql.Timestamp timestamp2 = rs.getTimestamp("finished_date");
-                LocalDateTime localDateTime2 = timestamp2.toLocalDateTime();
-                task.setFinishedDate(localDateTime2);}
+                if (task.getStatus().equals(TaskStatus.DONE)) {
+                    java.sql.Timestamp timestamp2 = rs.getTimestamp("finished_date");
+                    LocalDateTime localDateTime2 = timestamp2.toLocalDateTime();
+                    task.setFinishedDate(localDateTime2);
+                }
 
                 // task.setFinishedDate(LocalDateTime.parse(rs.getString("finished_date")));
                 dtoList.add(task);
@@ -125,7 +127,7 @@ public class TaskRepository {
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc_db", "jdbs_user", "123456");
             Statement statement = con.createStatement();
-            String sql = "insert into task(title,content,status,created_date) values('%s','%s','"+dto.getStatus().toString()+"','"+dto.getCreatedDate() + "')";
+            String sql = "insert into task(title,content,status,created_date) values('%s','%s','" + dto.getStatus().toString() + "','" + dto.getCreatedDate() + "')";
             sql = String.format(sql, dto.getTitle(), dto.getContent());
             int effectedRows = statement.executeUpdate(sql);
             con.close();

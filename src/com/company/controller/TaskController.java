@@ -25,7 +25,7 @@ public class TaskController {
                 case 3:
                     printTaskListfinnish();
                     break;
-                    case 4:
+                case 4:
                     deleteTask();
                     break;
                 case 5:
@@ -64,7 +64,8 @@ public class TaskController {
         taskService.addTask(task);
 
     }
-    public void done(){
+
+    public void done() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Id");
         Integer id = Integer.valueOf(scanner.next());
@@ -73,7 +74,7 @@ public class TaskController {
         task.setStatus(TaskStatus.DONE);
         task.setFinishedDate(LocalDateTime.now());
         TaskService taskService = new TaskService();
-        taskService.TaskDone(task,id);
+        taskService.TaskDone(task, id);
     }
 
     public void updateTask() {
@@ -95,6 +96,7 @@ public class TaskController {
         TaskService taskService = new TaskService();
         taskService.updateTask(task, id);
     }
+
     public void deleteTask() {
         Scanner scanner = new Scanner(System.in);
 
